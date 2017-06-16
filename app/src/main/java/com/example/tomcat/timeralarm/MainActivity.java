@@ -1,6 +1,7 @@
 package com.example.tomcat.timeralarm;
 
 import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,7 +9,8 @@ import android.widget.TextView;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class MainActivity extends AppCompatActivity
@@ -78,4 +80,53 @@ public class MainActivity extends AppCompatActivity
         handler.postDelayed(runnable, 1000*10);
         Log.d(TAG, msg);
     }
+
+
+    private void initHandlerSleep()
+    {
+        final Handler     handler1 = new Handler();
+        Runnable    runnable1   = new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                handler1.postDelayed(this, 2000);
+            }
+        };
+
+    }
+
+    private void setHandlerSleep()
+    {
+        //handler1.postDelayed(runnable1, 20000);
+        //handler1.removeCallbacks(runnable1);
+    }
+
+    private void initHandlerTimerTask()
+    {
+        Timer timer = new Timer();
+        TimerTask   task;
+        final Handler     handler2 = new Handler()
+        {
+            @Override
+            public void handleMessage(Message msg)
+            {
+                // to do something
+                super.handleMessage(msg);
+            }
+        };
+
+        task = new TimerTask() {
+            @Override
+            public void run() {
+                Message message = new Message();
+                message.what = 1;
+                handler2.sendMessage(message);
+            }
+        };
+
+        timer.schedule(task, 2000, 2000);
+    }
+
+
 }
